@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Frontend Mentor | Time tracking dashboard</title>
+
+</head>
+
+<body>
+  <main>
+    <div class="container__user">
+      <div class="container__user_top">
+        <img src="images/image-jeremy.png" alt="jeremy_profile">
+        <div class="container__user_top_info">
+          <p>Report for</p>
+          <h3>Jeremy Robson</h3>
+        </div>
+      </div>
+      <div class="container__user_bot">
+        <p class="active_p" id="daily">Daily</p>
+        <p id="weekly">Weekly</p>
+        <p id="monthly">Monthly</p>
+      </div>
+    </div>
+    <div class="container__components work-container">
+      <div class="container__components_top work">
+        <img src="images/icon-work.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Work</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__components play-container">
+      <div class="container__components_top play">
+        <img src="images/icon-play.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Play</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__components study-container">
+      <div class="container__components_top study">
+        <img src="images/icon-study.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Study</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__components exercise-container">
+      <div class="container__components_top exercise">
+        <img src="images/icon-exercise.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Exercise</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__components social-container">
+      <div class="container__components_top social">
+        <img src="images/icon-social.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Social</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__components self-care-container">
+      <div class="container__components_top self-care">
+        <img src="images/icon-self-care.svg" alt="">
+      </div>
+      <div class="container__components_bot">
+        <div class="container__components_bot_head">
+          <p>Self Care</p>
+          <img src="images/icon-ellipsis.svg" alt="">
+        </div>
+        <div class="container__components_bot_foot">
+          <p class="current">5hrs</p>
+          <p class="previous">Previous - 7hrs</p>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+  <script src="data.json"></script>
+  <script type="text/javascript">
+    const daily = document.getElementById("daily");
+    const weekly = document.getElementById("weekly");
+    const monthly = document.getElementById("monthly");
+
+    setNewData("daily");
+    daily.addEventListener("click", function () {
+      removeActive();
+      daily.classList.add("active_p");
+      setNewData("daily");
+    });
+    weekly.addEventListener("click", function () {
+      removeActive();
+      weekly.classList.add("active_p");
+      setNewData("weekly");
+    });
+    monthly.addEventListener("click", function () {
+      removeActive();
+      monthly.classList.add("active_p");
+      setNewData("monthly");
+    });
+
+    function setNewData(type) {
+      fetch("data.json")
+        .then(response => response.json())
+        .then(json => {
+          switch (type) {
+            case "daily":
+              for (var key in json) {
+                const current = document.getElementsByClassName("current");
+                const previous = document.getElementsByClassName("previous");
+                current[key].innerHTML = json[key].timeframes.daily['current'] + "hrs";
+                previous[key].innerHTML = "Previous - " + json[key].timeframes.daily['previous'] + "hrs";
+              }
+              break;
+            case "weekly":
+              for (var key in json) {
+                const current = document.getElementsByClassName("current");
+                const previous = document.getElementsByClassName("previous");
+                current[key].innerHTML = json[key].timeframes.weekly['current'] + "hrs";
+                previous[key].innerHTML = "Previous - " + json[key].timeframes.weekly['previous'] + "hrs";
+              }
+              break;
+            case "monthly":
+              for (var key in json) {
+                const current = document.getElementsByClassName("current");
+                const previous = document.getElementsByClassName("previous");
+                current[key].innerHTML = json[key].timeframes.monthly['current'] + "hrs";
+                previous[key].innerHTML = "Previous - " + json[key].timeframes.monthly['previous'] + "hrs";
+              }
+              break;
+            default:
+              for (var key in json) {
+                const current = document.getElementsByClassName("current");
+                const previous = document.getElementsByClassName("previous");
+                current[key].innerHTML = json[key].timeframes.daily['current'] + "hrs";
+                previous[key].innerHTML = "Previous - " + json[key].timeframes.daily['previous'] + "hrs";
+              }
+
+          }
+        });
+    }
+    function removeActive() {
+      daily.classList.remove("active_p");
+      weekly.classList.remove("active_p");
+      monthly.classList.remove("active_p");
+    }
+
+  </script>
+
+</body>
+
+</html>
